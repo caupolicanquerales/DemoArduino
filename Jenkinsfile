@@ -13,9 +13,14 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Deploy') {
+        stage('build app') {
             steps {
-                echo 'Deploying....'
+                sh 'npm run build'
+            }
+        }
+        stage('deploy app') {
+            steps {
+                echo 'App was deployed'
             }
         }
     }
