@@ -20,7 +20,7 @@ pipeline {
         }
          stage('Build docker') {
             steps{
-                sh 'docker build -t caupolicanquerales/DemoArduino:latest .'
+                sh 'docker build -t caupolicanquerales/demoarduino:latest .'
             }
         }
         stage('deploy app') {
