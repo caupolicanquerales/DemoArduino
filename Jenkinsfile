@@ -18,6 +18,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
+         stage('Build docker') {
+            steps{
+                sh 'docker build -t caupolicanquerales/DemoArduino:latest .'
+            }
+        }
         stage('deploy app') {
             steps {
                 echo 'App was deployed'
