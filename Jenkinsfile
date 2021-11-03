@@ -1,5 +1,10 @@
 pipeline {
-       agent any
+    agent any
+    environment{
+        dockerImage=''
+        registry='caupolicanquerales/demoarduino:latest'
+        registryCredential='caupolicanquerales'
+    }
 
     stages {
          stage('Clone Repository') {
@@ -18,9 +23,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
-         stage('Build docker') {
+        stage('Build docker') {
             steps{
-                sh 'docker build -t caupolicanquerales/demoarduino:latest .'
+                script{
+                    dockerImage= docker.build.registry
+                }
             }
         }
         stage('deploy app') {
