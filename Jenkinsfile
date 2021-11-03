@@ -1,9 +1,7 @@
 pipeline {
     agent any
     environment{
-        dockerImage=''
-        registry='caupolicanquerales/demoarduino:latest'
-        registryCredential='caupolicanquerales'
+       DOCKERHUB_CREDENTIALS= credentials('dockerhub_credential')
     }
 
     stages {
@@ -25,9 +23,12 @@ pipeline {
         }
         stage('Build docker') {
             steps{
-                script{
-                    dockerImage= docker.build.registry
-                }
+                sh 'docker build -t caupolicanquerales/demoarduino:latest .'
+            }
+        }
+        stage('Login docker'){
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('deploy app') {
