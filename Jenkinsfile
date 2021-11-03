@@ -31,10 +31,20 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
+         stage('Push Docker-hub') {
+            steps{
+                sh 'docker push caupolicanquerales/demoarduino:latest'
+            }
+        }
         stage('deploy app') {
             steps {
                 echo 'App was deployed'
             }
+        }
+    }
+    post{
+        always{
+            sh 'docker logout'
         }
     }
 }
